@@ -1,0 +1,52 @@
+import string
+from collections import Counter
+class WordsFinder:
+    file_names = []
+    all_words = dict()
+    def __init__(self, *files):
+        self.files=files
+        for f in files:
+            self.file_names.append(f)
+
+    def get_all_words(self):
+        for i in self.file_names:
+            with open(i, 'r', encoding='utf-8') as f:
+                st=str(f.read())
+                st=st.lower()
+                string.punctuation
+                for p in string.punctuation:
+                    if p in st:
+                         st = st.replace(p, '')
+                st=st.split()
+                z= []
+                for s in st:
+                    z.append(s)
+                self.all_words[i]=z
+        return self.all_words
+
+    def find(self, word):
+        self.get_all_words()
+        d={}
+        for k, v in self.all_words.items():
+            for i in v:
+                i=i.lower()
+            if word.lower() in v:
+                val=v.index(word.lower())
+                d[k]=val+1
+        return d
+
+    def count(self, word):
+        self.get_all_words()
+        d= {}
+        for k, v in self.all_words.items():
+            for i in v:
+                i=i.lower()
+            if word.lower() in v:
+                val=v.count(word.lower())
+                d[k] = val
+        return d
+
+finder2 = WordsFinder('test_file.txt', 'hgh.txt')
+print(finder2.get_all_words()) # Все слова
+print(finder2.find('if')) # 1 слово по счёту
+print(finder2.count('IF')) # 14 слова if в тексте всего
